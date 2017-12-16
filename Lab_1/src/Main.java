@@ -22,7 +22,7 @@ public class Main {
 
         // task 1
         RungeKutta rk = new RungeKutta(a, b, h0, eps, y0);
-        rk.calculateApproximateSolution();
+        rk.calc();
 
         float[] x = rk.getX();
         float[] y = rk.getY();
@@ -43,12 +43,12 @@ public class Main {
         // task 2
         float h2 = 5e-2f;
         ExplicitAdams ea = new ExplicitAdams(a, b, h2, y0, y[1], y[2]);
-        ea.calculateApproximateSolution();
+        ea.calc();
         float[] xa = ea.getX();
         float[] ya = ea.getY();
         printArray(ya);
         ImplicitAdams ia = new ImplicitAdams(a, b, h2, y0, y[1], ya);
-        ia.calculateApproximateSolution();
+        ia.calc();
         float[] yia = ia.getY();
         printArray(yia);
         float eGa = -1f;
@@ -57,6 +57,16 @@ public class Main {
         }
         System.out.println(eGa);
 
-
+        // task 3
+        DormandPrince dp = new DormandPrince(a, b, h0, y0);
+        dp.calc();
+        float[] xdp = dp.getX();
+        float[] ydp = dp.getY();
+        printArray(ydp);
+        float eGdp = -1f;
+        for (int i = 0; i < x.length; i++) {
+            eGdp = Math.max(eGdp, Math.abs(u(xdp[i]) - ydp[i]));
+        }
+        System.out.println(eGdp);
     }
 }

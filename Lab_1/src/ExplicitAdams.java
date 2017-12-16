@@ -1,19 +1,11 @@
-public class ExplicitAdams {
+public class ExplicitAdams extends NumericalMethod {
 
-    private float a;
-    private float b;
-    private float h;
     private float y0;
     private float y1;
     private float y2;
-    private float[] x;
-    private float[] y;
 
     ExplicitAdams(float a, float b, float h, float y0, float y1, float y2) {
-        this.a = a;
-        this.b = b;
-        this.h = h;
-        this.y0 = y0;
+        super(a, b, h, y0);
         this.y1 = y1;
         this.y2 = y2;
     }
@@ -22,13 +14,10 @@ public class ExplicitAdams {
         return (float)(-3.3 * Math.pow(x, 2.3) * y * Math.sin(Math.pow(x, 3.3)));
     }
 
-    void calculateApproximateSolution() {
-        int n = (int)((b - a) / h + 1);
-        float[] x = new float[n];
+    public void calc() {
+        int n = calcN(h);
+        float[] x = calcGrid(h);
         float[] y = new float[n];
-        for (int i = 0; i < n; i++) {
-            x[i] = a + i * h;
-        }
         y[0] = y0;
         y[1] = y1;
         y[2] = y2;
@@ -39,13 +28,7 @@ public class ExplicitAdams {
         }
         this.x = x;
         this.y = y;
+        this.n = n;
     }
 
-    public float[] getX() {
-        return x;
-    }
-
-    public float[] getY() {
-        return y;
-    }
 }
